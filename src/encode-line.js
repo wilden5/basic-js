@@ -10,10 +10,19 @@ const { NotImplementedError } = require('../lib');
  * For aabbbc should return 2a3bc
  *
  */
+function encodeLine( str ) {
+  let result = '';
+  let counter = 1;
 
-function encodeLine(/* str */) {
-  // Remove line below and write your code here
-  throw new NotImplementedError('Not implemented');
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === str[i +1]) {
+      counter++;
+    } else {
+      result +=(counter === 1 ? '' : counter) + str[i];
+      counter = 1;
+    }
+  }
+  return result;
 }
 
 module.exports = {
