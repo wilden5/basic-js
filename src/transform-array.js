@@ -18,24 +18,31 @@ function transform(arr) {
         throw new Error("'arr' parameter must be an instance of the Array!");
     }
 
-    const transformedArray = [...arr];
+    const transformedArray = [];
 
-    for (let i = 0; i < transformedArray.length; i++) {
-        switch (transformedArray[i]) {
+    for (let i = 0; i < arr.length; i++) {
+        switch (arr[i]) {
             case '--discard-next':
-                transformedArray.splice(i, 2);
+                i += 1;
                 break;
             case '--discard-prev':
-                    transformedArray.splice(i - 1, 2);
-                break;
+              if (transformedArray.length > 0 && arr[i - 2] !== '--discard-next') {
+                transformedArray.pop();
+              }
+              break;
             case '--double-next':
-                    transformedArray[i] = transformedArray[i + 1];
-                break;
+              if (i + 1 < arr.length) {
+                transformedArray.push(arr[i + 1]);
+              }
+              break;
             case '--double-prev':
-                    transformedArray[i] = transformedArray[i - 1];
-                break;
+              if (i > 0 && arr[i - 2] !== '--discard-next') {
+                transformedArray.push(arr[i - 1]);
+              }
+              break;
             default:
-                break;
+              transformedArray.push(arr[i]);
+              break;
         }
     }
 
